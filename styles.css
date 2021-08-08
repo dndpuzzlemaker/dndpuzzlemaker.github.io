@@ -169,6 +169,7 @@ html{
 	user-select: none;
 	cursor: pointer;
 	margin-left: 20px;
+	text-decoration: none;
 }
 .button:hover{
 	background-color: #02449c;
