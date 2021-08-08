@@ -1,0 +1,173 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Tile Puzzle Maker</title>
+	<meta name="description" content="Tile Puzzle Maker">
+	<meta name="author" content="Darwen">
+
+	<meta property="og:title" content="Tile Puzzle Maker">
+	<meta property="og:type" content="website">
+	<meta property="og:description" content="Tile Puzzle Maker">
+
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div id="app">
+		<div class="grid">
+			<div class="row" v-for="row in grid_int">
+				<div class="square" 
+					v-for="square in grid_int" 
+					:class="{selected : selected_tile_row == row-1 && selected_tile_column == square-1}"
+					:data-group="(tiles[row-1][square-1] == null)? 0 : tiles[row-1][square-1].group"
+					:style="{
+						width: square_width+'%', 
+						height: square_height+'%', 
+						left: square_width*(square-1)+'%', 
+						top: square_height*(row-1)+'%'
+					}"
+					v-on:click="addTile(row-1, square-1)"
+					@contextmenu="viewDetails($event, row-1, square-1)"
+				>
+					<div class="inner" :style="{
+						backgroundImage: (tiles[row-1][square-1] == null)? '' : 'url(images/'+tiles[row-1][square-1].type+'.png)',
+						transform: 'rotate('+(tiles[row-1][square-1] == null? 0 : tiles[row-1][square-1].rotation)+'deg)'
+					}"></div>
+				</div>
+			</div>
+		</div>
+		
+		<input class="width-slider" type="range" min="9" max="17" v-model="grid"/>
+		
+		<div class="palette">
+			<div class="type">
+				<div class="title">Generators</div>
+				
+				<div class="flex">
+					<div class="tile" :class="{selected : current_tile == 'GenI'}" style="background-image: url('images/GenI.png')" v-on:click="selectTile('GenI')"></div>
+					<div class="tile" :class="{selected : current_tile == 'GenS'}" style="background-image: url('images/GenS.png')" v-on:click="selectTile('GenS')"></div>
+				</div>
+			</div>
+			
+			<div class="type">
+				<div class="title">Tiles</div>
+				
+				<div class="flex">
+					<div class="tile" :class="{selected : current_tile == 'TileI'}" style="background-image: url('images/TileI.png')" v-on:click="selectTile('TileI')"></div>
+					<div class="tile" :class="{selected : current_tile == 'TileL'}" style="background-image: url('images/TileL.png')" v-on:click="selectTile('TileL')"></div>
+					<div class="tile" :class="{selected : current_tile == 'TileT'}" style="background-image: url('images/TileT.png')" v-on:click="selectTile('TileT')"></div>
+				</div>
+			</div>
+			
+			<div class="type">
+				<div class="title">Others</div>
+				
+				<div class="flex">
+					<div class="tile" :class="{selected : current_tile == 'Trigger'}" style="background-image: url('images/Trigger.png')" v-on:click="selectTile('Trigger')"></div>
+					<div class="tile" :class="{selected : current_tile == 'Goal'}" style="background-image: url('images/Goal.png')" v-on:click="selectTile('Goal')"></div>
+				</div>
+			</div>
+			
+			<div class="type">
+				<div class="title">Group</div>
+				
+				<div class="flex">
+					<div class="tile" :class="{selected : current_tile == 'G0'}" v-on:click="selectTile('G0')">0</div>
+					<div class="tile" :class="{selected : current_tile == 'G1'}" v-on:click="selectTile('G1')">1</div>
+					<div class="tile" :class="{selected : current_tile == 'G2'}" v-on:click="selectTile('G2')">2</div>
+					<div class="tile" :class="{selected : current_tile == 'G3'}" v-on:click="selectTile('G3')">3</div>
+					<div class="tile" :class="{selected : current_tile == 'G4'}" v-on:click="selectTile('G4')">4</div>
+				</div>
+				<div class="flex">
+					<div class="tile" :class="{selected : current_tile == 'G5'}" v-on:click="selectTile('G5')">5</div>
+					<div class="tile" :class="{selected : current_tile == 'G6'}" v-on:click="selectTile('G6')">6</div>
+					<div class="tile" :class="{selected : current_tile == 'G7'}" v-on:click="selectTile('G7')">7</div>
+					<div class="tile" :class="{selected : current_tile == 'G8'}" v-on:click="selectTile('G8')">8</div>
+					<div class="tile" :class="{selected : current_tile == 'G9'}" v-on:click="selectTile('G9')">9</div>
+				</div>
+			</div>
+			
+			<div class="type">
+				<div class="title">Remove</div>
+				
+				<div class="tile" :class="{selected : current_tile == null}" style="background-image: url('images/Destroy.png')" v-on:click="selectTile(null)"></div>
+			</div>
+		</div>
+		
+		<div class="details">
+			<div class="title">Details</div>
+			
+			<table v-if="selected_tile">
+				<tr>
+					<td><label for="group">Group<label></td>
+					<td class="flex">
+						<div class="r-button" v-on:click="Math.max(0, selected_tile.group--)">-</div>
+						<div class="r-value">{{selected_tile.group}}</div>
+						<div class="r-button" v-on:click="selected_tile.group++">+</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="rotation">Rotation<label></td>
+					<td class="flex">
+						<div class="r-button" v-on:click="selected_tile.rotation = (selected_tile.rotation+270)%360">-</div>
+						<div class="r-value">{{selected_tile.rotation}}</div>
+						<div class="r-button" v-on:click="selected_tile.rotation = (selected_tile.rotation+90)%360">+</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="lock">Locked<label></td>
+					<td><input id="lock" type="checkbox" v-model="selected_tile.locked"></td>
+				</tr>
+				<tr v-if="selected_tile.type == 'Trigger'">
+					<td><label for="trigger">Trigger group<label></td>
+					<td class="flex">
+						<div class="r-button" v-on:click="Math.max(0, selected_tile.trigger--)">-</div>
+						<div class="r-value">{{selected_tile.trigger}}</div>
+						<div class="r-button" v-on:click="selected_tile.trigger++">+</div>
+					</td>
+				</tr>
+			</table>
+			
+			<div v-else>Right click to select a Tile</div>
+		</div>
+		
+		<div class="actions flex">
+			<div class="button" v-on:click="exportPuzzle">Export</div>
+			<div class="button" v-on:click="openImportPuzzle">Import</div>
+			<div class="button">Load a puzzle</div>
+		</div>
+		
+		<div class="modal" v-if="modal" v-on:click.self="modal = null">
+			<div class="inner">
+				<div class="r-button close" v-on:click="modal = null">x</div>
+				<div class="title">{{modal}}</div>
+				<textarea id="json-input" v-model="json"></textarea>
+				<div class="modal-actions flex">
+					<div v-if="modal == 'export'" class="button" v-on:click="copyJson">Copy to clipboard</div>
+					<div v-if="modal == 'import'" class="button" v-on:click="importPuzzle">Import</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="r-button help" v-on:click="help = true">?</div>
+		
+		<div class="modal" v-if="help" v-on:click.self="help = false">
+			<div class="inner">
+				<div class="r-button close" v-on:click="help = false">x</div>
+				<div class="title">Help</div>
+				<div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="vue.min.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	-webkit-text-size-adjust: 100%;
+}
+
+html{
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+}
+.flex{
+	display: flex;
+}
+.title{
+	font-size: 1.5rem;
+	margin-bottom: 20px;
+	text-transform: capitalize;
+}
+.grid{
+	position: relative;
+	margin: 25px auto;
+	height: 80vh;
+	width: 80vh;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+.grid .square{
+	position: absolute;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+	cursor: pointer;
+}
+.grid .square.selected{
+	border: 3px solid red;
+}
+.grid .square[data-group="1"]{
+	background-color: #b3ffc7;
+}
+.grid .square[data-group="2"]{
+	background-color: #8cf4fa;
+}
+.grid .square[data-group="3"]{
+	background-color: #fcdebb;
+}
+.grid .square[data-group="4"]{
+	background-color: #ffbfdd;
+}
+.grid .square[data-group="5"]{
+	background-color: #fffdbf;
+}
+.grid .square[data-group="6"]{
+	background-color: #7ecfcf;
+}
+.grid .square[data-group="7"]{
+	background-color: #beadf0;
+}
+.grid .square[data-group="8"]{
+	background-color: #a8bd62;
+}
+.grid .square[data-group="9"]{
+	background-color: #f27a6f;
+}
+.grid .square .inner{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-position: center;
+	background-size: cover;
+}
+.width-slider{
+	position: fixed;
+	bottom: 25px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.palette{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 50px;
+	height: 100%;
+}
+.palette .title{
+	margin-bottom: 10px;
+}
+.palette .tile{
+	width: 40px;
+	height: 40px;
+	background-position: center;
+	background-size: cover;
+	margin-bottom: 10px;
+	border: 1px solid black;
+	cursor: pointer;
+	margin-right: 5px;
+	text-align: center;
+	line-height: 35px;
+}
+.palette .tile.selected{
+	border: 3px solid red;
+}
+.details{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	right: 50px;
+	height: 100%;
+}
+.details label{
+	margin-right: 20px;
+}
+.details input{
+	max-width: 50px;
+}
+.details td{
+	padding-bottom: 10px;
+}
+.r-button{
+	width: 20px;
+	height: 20px;
+	border-radius: 5px;
+	background-color: #0060DF;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+	margin-right: 10px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none;
+}
+.r-button:hover{
+	background-color: #02449c;
+}
+.r-value{
+	width: 30px;
+	margin-right: 10px;
+	text-align: center;
+}
+.actions{
+	position: fixed;
+	bottom: 25px;
+	right: 25px;
+}
+.button{
+	border-radius: 10px;
+	padding: 5px 20px;
+	color: white;
+	background-color: #0060DF;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none;
+	cursor: pointer;
+	margin-left: 20px;
+}
+.button:hover{
+	background-color: #02449c;
+}
+
+.modal{
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.7);
+}
+.modal .inner{
+	position: absolute;
+	left: 25%;
+	top: 25%;
+	width: 50%;
+	height: 50%;
+	background-color: white;
+	padding: 25px;
+	display: flex;
+    flex-direction: column;
+}
+.modal .inner .title{
+	text-align: center;
+}
+.modal .inner .r-button{
+	position: absolute;
+	right: 25px;
+	top: 25px;
+}
+.modal .inner textarea{
+	width: 100%;
+	height: 100%;
+	resize: none;
+}
+.modal .inner .modal-actions{
+	margin-top: 20px;
+	justify-content: end;
+}
+.help{
+	position: fixed;
+    right: 25px;
+    top: 25px;
+}
+
+
+
