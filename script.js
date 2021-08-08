@@ -28,6 +28,7 @@ var app = new Vue({
 		selected_tile_column : null,
 		modal : null,
 		help : false,
+		examples : false,
 		json : ''
 	},
 	computed: {
