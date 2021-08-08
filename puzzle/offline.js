@@ -1,0 +1,33 @@
+﻿{
+	"version": 1628423681,
+	"fileList": [
+		"data.js",
+		"c2runtime.js",
+		"jquery-2.1.1.min.js",
+		"offlineClient.js",
+		"images/tilei-sheet0.png",
+		"images/tilei-sheet1.png",
+		"images/tilel-sheet0.png",
+		"images/tilel-sheet1.png",
+		"images/geni-sheet0.png",
+		"images/triggeri-sheet0.png",
+		"images/triggeri-sheet1.png",
+		"images/block-sheet0.png",
+		"images/goal-sheet0.png",
+		"images/goal-sheet1.png",
+		"images/gensingle-sheet0.png",
+		"images/tilet-sheet0.png",
+		"images/tilet-sheet1.png",
+		"images/import-sheet0.png",
+		"icon-16.png",
+		"icon-32.png",
+		"icon-114.png",
+		"icon-128.png",
+		"icon-256.png",
+		"loading-logo.png",
+		"c2mp-net.js",
+		"c2mp-peer.js",
+		"c2mp.js",
+		"waker.js"
+	]
+}
